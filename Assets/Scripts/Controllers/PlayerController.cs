@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     float _speed = 10.0f;
 
     Vector3 _destPos;
-    float wait_run_ratio = 0f;
 
     public enum PlayerState
     {
@@ -20,17 +19,15 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Managers.Input.MouseAction += OnMouseClicked;
+
+        Managers.UI.ShowSceneUI<UI_Inven>();
     }
-
-
 
     void UpdateIdle()
     {
         //애니메이션
-        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 0, 10f * Time.deltaTime);
         Animator anim = GetComponent<Animator>();
-        anim.SetFloat("wait_run_ratio", wait_run_ratio);
-        anim.Play("WAIT_RUN");
+        anim.SetFloat("speed", 0);
     }
 
     void UpdateMoving()
@@ -50,10 +47,9 @@ public class PlayerController : MonoBehaviour
         }
 
         //애니메이션
-        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 1, 10f * Time.deltaTime);
         Animator anim = GetComponent<Animator>();
-        anim.SetFloat("wait_run_ratio", wait_run_ratio);
-        anim.Play("WAIT_RUN");
+        //현재 게임 상태에 대한 정보를 애님 그래프로 넘겨준다.
+        anim.SetFloat("speed", _speed);
     }
 
     void UpdateDie()
