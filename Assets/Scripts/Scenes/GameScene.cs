@@ -13,6 +13,7 @@ public class GameScene : BaseScene
 
         Managers.UI.ShowSceneUI<UI_Inven>();
 
+        gameObject.GetOrAddComponent<CursorController>();
     }
 
     public override void Clear()

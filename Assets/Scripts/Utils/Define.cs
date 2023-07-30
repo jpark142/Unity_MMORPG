@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class Define
 {
+    public enum State
+    {
+        Die,
+        Moving,
+        Idle,
+        Skill,
+    }
+
+public enum Layer
+    {
+        Ground = 8,
+        Block = 9,
+        Monster = 10,
+    }
+
     public enum Scene
     {
         Unknown,
@@ -27,6 +42,8 @@ public class Define
     public enum MouseEvent
     {
         Press,
+        PointerDown,
+        PointerUp,
         Click,
     }
 
