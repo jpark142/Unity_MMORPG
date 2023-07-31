@@ -14,6 +14,7 @@ public class MonsterController : BaseContoller
 
     public override void Init()
     {
+        WorldObjectType = Define.WorldObject.Monster;
         _stat = gameObject.GetComponent<Stat>();
 
         if(gameObject.GetComponent<UI_HPBar>() == null )
@@ -22,7 +23,7 @@ public class MonsterController : BaseContoller
 
     protected override void UpdateIdle()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = Managers.Game.GetPlayer();
         if (player == null)
             return;
 
@@ -83,9 +84,7 @@ public class MonsterController : BaseContoller
         {
             // Ã¼·Â
             Stat targetStat = _target.GetComponent<Stat>();
-            Stat myStat = gameObject.GetComponent<Stat>();
-            int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
-            targetStat.Hp -= damage;
+            targetStat.OnAttacked(_stat);
 
             if(targetStat.Hp > 0)
             {

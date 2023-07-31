@@ -14,6 +14,8 @@ public class PlayerController : BaseContoller
 
     public override void Init()
     {
+        WorldObjectType = Define.WorldObject.Player;
+
         _stat = gameObject.GetComponent<PlayerStat>();
         Managers.Input.MouseAction += OnMouseEvent;
 
@@ -47,6 +49,7 @@ public class PlayerController : BaseContoller
 
         // ¿Ãµø
         Vector3 dir = _destPos - transform.position;
+        dir.y = 0;
         if (dir.magnitude < 0.1f)
         {
             State = Define.State.Idle;
@@ -76,9 +79,7 @@ public class PlayerController : BaseContoller
         if (_target != null)
         {
             Stat targetStat = _target.GetComponent<Stat>();
-            PlayerStat myStat = gameObject.GetComponent<PlayerStat>();
-            int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
-            targetStat.Hp -= damage;
+            targetStat.OnAttacked(_stat);
         }
 
         if (_stopSkill)
